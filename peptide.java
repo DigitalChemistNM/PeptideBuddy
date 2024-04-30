@@ -181,7 +181,7 @@ public class CalculateSequence{
 
         String peptideSmiles = "";
 
-        for (int i =0; i < sequence.length(); i++){
+        for (int i =0; i < sequence.length() -1; i++){
 
             char aa = sequence.charAt(i);
             int index = getIndexFromOneLetterCode(list, aa);
@@ -191,6 +191,7 @@ public class CalculateSequence{
             }
 
         }
+        peptideSmiles += (list.get((sequence.length())).getSmiles());
         return peptideSmiles;
     }
     //remove last charchter as the oxygen molecule at the end is lost through the condensation reaction, hydrogens are ommitted in this SMILES representation
