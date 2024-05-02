@@ -13,7 +13,9 @@ public class MainProgram {
         ArrayList<AminoAcid> list = naturalAminoAcids.collectAAInfo();
         
         //naturalAminoAcids.printList(list);
-
+        //System.out.println("");
+        //naturalAminoAcids.printOneLetterCode(list);
+        //System.out.println("");
         CalculateSequence calculate = new CalculateSequence();
         
         //UI for input a given sequence, sequences can also be hard coded
@@ -29,6 +31,8 @@ public class MainProgram {
         System.out.println("Molecular weight: " + mw);
         System.out.println("Monoisotopic mass: " + mono);
         System.out.println("Smiles: " + smiles);
+
+        
         
 } 
 
@@ -62,7 +66,7 @@ public class AminoAcid {
         return this.molecularWeight;
     }
 
-    public double getChar(){
+    public char getChar(){
         return this.oneLetterCode;
     }
 
@@ -121,6 +125,12 @@ public class CollectInformation{
     public void printList (ArrayList<AminoAcid> list){
         for (int i =0; i < list.size(); i++){
             System.out.println(list.get(i));
+        }
+    }
+
+    public void printOneLetterCode (ArrayList<AminoAcid> list){
+        for (int i =0; i<list.size(); i++){
+            System.out.print(list.get(i).getChar());
         }
     }
 
@@ -187,12 +197,14 @@ public class CalculateSequence{
             int index = getIndexFromOneLetterCode(list, aa);
 
             if (index != -1){
-                peptideSmiles = peptideSmiles + removeLastCharacter(list.get(index).getSmiles());
+                peptideSmiles += removeLastCharacter(list.get(index).getSmiles());
             }
 
         }
-        peptideSmiles += (list.get((sequence.length())).getSmiles());
-        return peptideSmiles;
+            char aa = sequence.charAt(sequence.length()-1);
+            int index = getIndexFromOneLetterCode(list, aa);
+            peptideSmiles += list.get(index).getSmiles();
+            return peptideSmiles;
     }
     //remove last charchter as the oxygen molecule at the end is lost through the condensation reaction, hydrogens are ommitted in this SMILES representation
     public String removeLastCharacter (String aaSmiles){
